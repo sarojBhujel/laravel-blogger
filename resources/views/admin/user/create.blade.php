@@ -37,22 +37,60 @@
             </div>
             <!-- /.card-header -->
             <!-- form start -->
-            <form role="form" action="{{route('role.store')}}" method="POST">
+            <form role="form" action="{{route('user.store')}}" method="POST">
               @csrf
-              <div class="card-body">
-                <div class="form-group">
-                  <label>User</label>
-                  <input type="text" class="form-control"  placeholder="Enter Your name" name="name">
-                </div>
-                <div class="form-group">
-                  <label>Slug</label>
-                  <input type="text" class="form-control" placeholder="body" name="slug">
-                </div>  
+              <div class="card-body offset-2">
+                <div class="form-group row">
+                  <label for="name" class="col-md-2 col-form-label">{{ __('User Name') }}:</label>
+                  <div class="col-md-6">
+                    <input type="text" class="form-control @error('name') is-invalid @enderror "  placeholder="Enter Your name" name="name"required value="{{old('name')}}">
+                    @error('password')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
                   </div>
-             </div>
-              <!-- /.card-body -->
+                  </div>
+                  <div class="form-group row">
+                    <label for="email" class="col-md-2 col-form-label">{{ __('Email') }}:</label>
+                    <div class="col-md-6">
+                      <input type="email" class="form-control @error('email') is-invalid @enderror " placeholder="email address" name="email" required value="{{old('email')}}">
+                    </div>
+                  </div>  
+                  <div class="form-group row">
+                    <label for="phone" class="col-md-2 col-form-label">{{ __('Phone Number') }}:</label>
+                    <div class="col-md-6">
+                      <input type="number" class="form-control @error('phone') is-invalid @enderror " placeholder="Phone Number" name="phone"required value="{{old('phone')}}">
+                    </div>
+                  </div>  
+                  <div class="form-group row">
+                    <label for="password" class="col-md-2 col-form-label">{{ __('Password') }}:</label>
 
-              <div class="card-footer">
+                    <div class="col-md-6">
+                        <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password"  value="{{old('password')}}">
+
+                        
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="password-confirm" class="col-md-2 col-form-label">{{ __('Confirm Password') }}:</label>
+
+                    <div class="col-md-6">
+                        <input id="password-confirm" type="password" class="form-control @error('password_confirmation') is-invalid @enderror" name="password_confirmation" required autocomplete="new-password">
+                        @error('password_confirmation')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+                </div>
+                <div class="form-group row">
+                  <label for="status" class="col-md-2 col-form-label">{{ __('Status') }}:</label>
+                  <input  type="checkbox" name="my-checkbox" checked data-bootstrap-switch data-off-color="danger" data-on-color="success" style="display: none;">
+                </div>
+
+              <div class="card-footer float-right mr-5">
                 <button type="submit" class="btn btn-primary">Submit</button>
               </div>
             </form>
@@ -60,4 +98,17 @@
         </section>
       </div><!-- /.container-fluid -->
     <!-- /.content -->
+@endsection
+@section('footerContent')
+<script src="{{asset('adminAssets/plugins/bootstrap-switch/js/bootstrap-switch.min.js')}}"></script>
+<script>
+  $(function () {
+    
+
+    $("input[data-bootstrap-switch]").each(function(){
+      $(this).bootstrapSwitch('state', $(this).prop('checked'));
+    });
+
+  })
+</script>
 @endsection
